@@ -1,0 +1,16 @@
+# Dependencies
+node_modules/
+
+# TypeScript output
+dist/
+*.js
+*.js.map
+
+# Environment variables
+.env
+
+# Logs
+*.log
+
+# OS-specific files
+.DS_Store 
