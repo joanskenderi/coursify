@@ -20,6 +20,12 @@ Install dependencies
 npm i
 ```
 
+Seed database
+
+```
+npm run seed
+```
+
 Start the server
 
 ```
