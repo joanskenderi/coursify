@@ -1,10 +1,14 @@
 import { useLocation, useNavigate } from 'react-router-dom';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { AppBar, IconButton, Toolbar, Typography } from '@mui/material';
+import { AppBar, IconButton, Toolbar, Typography, Badge } from '@mui/material';
+import { useSelector } from 'react-redux';
+
+import { selectCartSummary } from '../store/cartSlice';
 
 const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const { totalItems } = useSelector(selectCartSummary);
 
   const shouldShowCart = location.pathname === '/';
 
@@ -20,8 +24,10 @@ const Navbar = () => {
           Coursify
         </Typography>
         {shouldShowCart && (
-          <IconButton color="inherit">
-            <ShoppingCartIcon />
+          <IconButton color="inherit" onClick={() => navigate('/cart')}>
+            <Badge badgeContent={totalItems} color="secondary">
+              <ShoppingCartIcon />
+            </Badge>
           </IconButton>
         )}
       </Toolbar>
