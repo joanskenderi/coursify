@@ -21,3 +21,19 @@ export interface CartItem {
 export interface CartState {
   items: CartItem[];
 }
+
+export interface PaymentInfo {
+  firstName: string;
+  lastName: string;
+  email: string;
+  address: string;
+  cardHolderName: string;
+  cardNumber: string;
+  expDate: string;
+  cvv: string;
+  termsAccepted: boolean;
+}
+
+export interface PaymentState {
+  payment: PaymentInfo | null;
+}

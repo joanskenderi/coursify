@@ -12,7 +12,6 @@ const Cart = () => {
   const cartItems = useSelector(selectCartItems);
   const { totalItems, totalPrice } = useSelector(selectCartSummary);
   const dispatch = useDispatch();
-
   const navigate = useNavigate();
 
   const handleClearCart = () => {
@@ -78,9 +77,6 @@ const Cart = () => {
       >
         {cartItems.length !== 0 && (
           <>
-            <Button variant="contained" color="primary" sx={{ marginTop: 2 }}>
-              Checkout
-            </Button>
             <Button
               variant="contained"
               color="error"
@@ -88,6 +84,14 @@ const Cart = () => {
               onClick={handleClearCart}
             >
               Clear Cart
+            </Button>
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{ marginTop: 2 }}
+              onClick={() => navigate('/checkout')}
+            >
+              Checkout
             </Button>
           </>
         )}
