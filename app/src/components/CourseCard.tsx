@@ -7,17 +7,41 @@ import {
   CardActions,
   Box,
 } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 interface CourseCardProps {
+  id: string;
   title: string;
   description: string;
   price: number;
   image: string;
 }
 
-const CourseCard = ({ title, description, price, image }: CourseCardProps) => {
+const CourseCard = ({
+  id,
+  title,
+  description,
+  price,
+  image,
+}: CourseCardProps) => {
+  const navigate = useNavigate();
+
+  const handleCardClick = () => {
+    if (id) {
+      navigate(`/courses/${id}`);
+    }
+  };
+
+  const handleAddToCartClick = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    console.log(`${title} added to cart!`);
+  };
+
   return (
-    <Card sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+    <Card
+      sx={{ display: 'flex', flexDirection: 'column', height: '100%' }}
+      onClick={handleCardClick}
+    >
       <CardMedia component="img" height="140" image={image} alt={title} />
       <CardContent sx={{ flexGrow: 1 }}>
         <Typography gutterBottom variant="h6" component="div">
@@ -39,7 +63,12 @@ const CourseCard = ({ title, description, price, image }: CourseCardProps) => {
             width: '100%',
           }}
         >
-          <Button size="small" variant="contained" color="primary">
+          <Button
+            size="small"
+            variant="contained"
+            color="primary"
+            onClick={handleAddToCartClick}
+          >
             Add to Cart
           </Button>
           <Typography variant="h6" component="div" sx={{ fontWeight: 'bold' }}>

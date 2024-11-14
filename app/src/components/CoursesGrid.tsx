@@ -14,8 +14,14 @@ const CoursesGrid = () => {
         <CircularProgress sx={{ margin: 'auto', display: 'block' }} />
       ) : (
         courses?.map((course) => (
-          <Grid key={course.id} item xs={12} sm={6} md={4} lg={3}>
-            <CourseCard {...course} />
+          <Grid key={course._id} item xs={12} sm={6} md={4} lg={3}>
+            <CourseCard
+              id={course._id}
+              title={course.title}
+              description={course.description}
+              price={course.price}
+              image={course.image}
+            />
           </Grid>
         ))
       )}

@@ -1,9 +1,12 @@
 import { Route, Routes } from 'react-router-dom';
 
-import { Home } from '../pages';
+import { CourseInfo, Home } from '../pages';
 import { RouteConfig } from '../types';
 
-const routes: RouteConfig[] = [{ path: '/', element: <Home /> }];
+const routes: RouteConfig[] = [
+  { path: '/', element: <Home /> },
+  { path: '/courses/:courseId', element: <CourseInfo /> },
+];
 
 const AppRouter = () => {
   return (
