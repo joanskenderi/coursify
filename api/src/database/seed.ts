@@ -1,8 +1,10 @@
 import mongoose from 'mongoose';
+import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
 
 import { connect } from './mongo';
 import Course from '../models/Course';
+import UserModel from '../models/User';
 
 dotenv.config();
 
@@ -79,17 +81,34 @@ const courses = [
   },
 ];
 
+const users = [
+  {
+    firstName: 'John',
+    lastName: 'Doe',
+    email: 'john@test.com',
+    password: 'pass123',
+  },
+];
+
 const seedDatabase = async () => {
   try {
     connect();
 
     const existingProducts = await Course.find();
+    const existingUsers = await UserModel.find();
 
-    if (existingProducts.length === 0) {
+    if (existingProducts.length === 0 || existingUsers.length === 0) {
+      for (const user of users) {
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(user.password, salt);
+      }
+
       await Course.insertMany(courses);
-      console.log('Database seeded with course data.');
+      await UserModel.insertMany(users);
+
+      console.log('Database seeded with data.');
     } else {
-      console.log('Database already contains course data.');
+      console.log('Database already contains the data.');
     }
 
     mongoose.connection.close();

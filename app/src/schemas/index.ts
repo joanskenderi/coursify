@@ -25,3 +25,5 @@ export const paymentSchema = z.object({
     message: 'You must accept the terms and conditions',
   }),
 });
+
+export { loginSchema, type LoginFormType } from './loginSchema';

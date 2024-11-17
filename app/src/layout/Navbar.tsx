@@ -1,7 +1,15 @@
-import { useLocation, useNavigate } from 'react-router-dom';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { AppBar, IconButton, Toolbar, Typography, Badge } from '@mui/material';
 import { useSelector } from 'react-redux';
+import { useLocation, useNavigate } from 'react-router-dom';
+import {
+  AppBar,
+  IconButton,
+  Toolbar,
+  Typography,
+  Badge,
+  Box,
+} from '@mui/material';
+import { Login } from '@mui/icons-material';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 import { selectCartSummary } from '../store/cartSlice';
 
@@ -11,6 +19,7 @@ const Navbar = () => {
   const { totalItems } = useSelector(selectCartSummary);
 
   const shouldShowCart = location.pathname === '/';
+  const showLogin = location.pathname === '/login';
 
   return (
     <AppBar position="static" color="primary">
@@ -23,13 +32,20 @@ const Navbar = () => {
         >
           Coursify
         </Typography>
-        {shouldShowCart && (
-          <IconButton color="inherit" onClick={() => navigate('/cart')}>
-            <Badge badgeContent={totalItems} color="secondary">
-              <ShoppingCartIcon />
-            </Badge>
-          </IconButton>
-        )}
+        <Box>
+          {shouldShowCart && (
+            <IconButton color="inherit" onClick={() => navigate('/cart')}>
+              <Badge badgeContent={totalItems} color="secondary">
+                <ShoppingCartIcon />
+              </Badge>
+            </IconButton>
+          )}
+          {!showLogin && (
+            <IconButton color="inherit" onClick={() => navigate('/login')}>
+              <Login />
+            </IconButton>
+          )}
+        </Box>
       </Toolbar>
     </AppBar>
   );
