@@ -1,6 +1,6 @@
 import { Route, Routes } from 'react-router-dom';
 
-import { Cart, Checkout, CourseInfo, Home, Login } from '../pages';
+import { Cart, Checkout, CourseInfo, Home, Login, Summary } from '../pages';
 import { RouteConfig } from '../types';
 
 const routes: RouteConfig[] = [
@@ -8,6 +8,7 @@ const routes: RouteConfig[] = [
   { path: '/courses/:courseId', element: <CourseInfo /> },
   { path: '/cart', element: <Cart /> },
   { path: '/checkout', element: <Checkout /> },
+  { path: '/summary', element: <Summary /> },
   { path: '/login', element: <Login /> },
 ];
 

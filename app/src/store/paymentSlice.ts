@@ -21,7 +21,7 @@ const paymentSlice = createSlice({
 
 export const { setPaymentInfo, clearPaymentInfo } = paymentSlice.actions;
 
-export const selectPaymentInfo = (state: { payment: PaymentInfo | null }) =>
-  state.payment;
+export const selectPaymentInfo = (state: { payment: PaymentState }) =>
+  state.payment.payment;
 
 export default paymentSlice.reducer;

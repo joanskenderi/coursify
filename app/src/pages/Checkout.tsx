@@ -1,3 +1,7 @@
+import { useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Controller, useForm } from 'react-hook-form';
+import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Box,
@@ -7,37 +11,32 @@ import {
   Grid,
   Typography,
 } from '@mui/material';
-import { useDispatch, useSelector } from 'react-redux';
-import { Controller, useForm } from 'react-hook-form';
-import { useNavigate } from 'react-router-dom';
-import { z } from 'zod';
 
 import { paymentSchema } from '../schemas';
-import { setPaymentInfo } from '../store/paymentSlice';
-import { clearCart, selectCartSummary } from '../store/cartSlice';
 import { FormField } from '../components';
+import { selectPaymentInfo, setPaymentInfo } from '../store/paymentSlice';
+import { clearCart } from '../store/cartSlice';
 import { formFields } from '../config';
 
 type PaymentFormData = z.infer<typeof paymentSchema>;
 
 const Checkout = () => {
+  const paymentInfo = useSelector(selectPaymentInfo);
   const {
     control,
     handleSubmit,
     formState: { errors },
   } = useForm<PaymentFormData>({
     resolver: zodResolver(paymentSchema),
+    defaultValues: paymentInfo || {},
   });
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { totalPrice } = useSelector(selectCartSummary);
-
   const onSubmit = (data: PaymentFormData) => {
     dispatch(setPaymentInfo({ ...data }));
-    console.log('Payment Information:', { ...data, totalPrice });
     dispatch(clearCart());
-    navigate('/');
+    navigate('/summary');
   };
 
   return (
@@ -47,7 +46,7 @@ const Checkout = () => {
       sx={{
         display: 'flex',
         flexDirection: 'column',
-        gap: 2,
+        gap: 6.5,
         maxWidth: 500,
         height: 'auto',
         margin: 'auto',
@@ -61,7 +60,6 @@ const Checkout = () => {
       <Typography variant="h4" textAlign="center" sx={{ marginBottom: 4 }}>
         Payment Information
       </Typography>
-
       <Grid container spacing={2}>
         {formFields.map((field) => (
           <FormField
@@ -74,7 +72,6 @@ const Checkout = () => {
           />
         ))}
       </Grid>
-
       <Box>
         <Controller
           name="termsAccepted"
@@ -93,7 +90,6 @@ const Checkout = () => {
           </Typography>
         )}
       </Box>
-
       <Box sx={{ display: 'flex', flexDirection: 'row', gap: 2 }}>
         <Button
           variant="contained"
